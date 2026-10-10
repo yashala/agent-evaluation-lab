@@ -120,7 +120,21 @@ def main() -> None:
         ]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n")
+    update_readme(head, rows)
     print(f"wrote {OUT}")
+
+
+def update_readme(head: list[str], rows: list[list[str]]) -> None:
+    """Replace the results block in README.md with the run table (minus the run-id column)."""
+    readme = ROOT / "README.md"
+    start, end = "<!-- results:start -->", "<!-- results:end -->"
+    if not readme.exists() or start not in readme.read_text():
+        return
+    table = ["| " + " | ".join(head[:-1]) + " |", "|" + "---|" * (len(head) - 1)]
+    table += ["| " + " | ".join(r[:-1]) + " |" for r in rows]
+    before, rest = readme.read_text().split(start, 1)
+    _, after = rest.split(end, 1)
+    readme.write_text(f"{before}{start}\n" + "\n".join(table) + f"\n{end}{after}")
 
 
 if __name__ == "__main__":
