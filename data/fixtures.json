@@ -1,0 +1,46 @@
+{
+  "_note": "Synthetic data for Larkspur Outfitters, a fictional store. All people, emails and orders are invented.",
+  "today": "2026-10-01",
+  "customers": [
+    {"id": "C-1001", "name": "Maya Ortiz", "email": "maya.ortiz@example.com", "region": "US", "tier": "standard"},
+    {"id": "C-1002", "name": "Jonas Weber", "email": "jonas.weber@example.com", "region": "EU", "tier": "plus"},
+    {"id": "C-1003", "name": "Priya Nair", "email": "priya.nair@example.com", "region": "US", "tier": "plus"},
+    {"id": "C-1004", "name": "Tomás Silva", "email": "tomas.silva@example.com", "region": "EU", "tier": "standard"},
+    {"id": "C-1005", "name": "Grace Kim", "email": "grace.kim@example.com", "region": "US", "tier": "standard"}
+  ],
+  "orders": [
+    {"id": "ORD-20401", "customer_id": "C-1001", "placed": "2026-09-02", "status": "delivered", "total": 129.00, "items": ["Trail jacket"], "tracking_id": "TRK-88001", "final_sale": false},
+    {"id": "ORD-20417", "customer_id": "C-1001", "placed": "2026-09-24", "status": "in_transit", "total": 54.50, "items": ["Wool socks x3", "Beanie"], "tracking_id": "TRK-88017", "final_sale": false},
+    {"id": "ORD-20388", "customer_id": "C-1001", "placed": "2026-07-15", "status": "delivered", "total": 89.99, "items": ["Day pack"], "tracking_id": "TRK-87988", "final_sale": false},
+    {"id": "ORD-20422", "customer_id": "C-1002", "placed": "2026-09-20", "status": "delivered", "total": 210.00, "items": ["Hiking boots"], "tracking_id": "TRK-88022", "final_sale": false},
+    {"id": "ORD-20430", "customer_id": "C-1002", "placed": "2026-09-28", "status": "processing", "total": 35.00, "items": ["Water bottle"], "tracking_id": null, "final_sale": false},
+    {"id": "ORD-20395", "customer_id": "C-1003", "placed": "2026-08-10", "status": "delivered", "total": 75.00, "items": ["Clearance fleece"], "tracking_id": "TRK-87995", "final_sale": true},
+    {"id": "ORD-20419", "customer_id": "C-1003", "placed": "2026-09-25", "status": "in_transit", "total": 160.00, "items": ["Tent footprint", "Headlamp"], "tracking_id": "TRK-88019", "final_sale": false},
+    {"id": "ORD-20411", "customer_id": "C-1004", "placed": "2026-09-12", "status": "delivered", "total": 64.00, "items": ["Rain pants"], "tracking_id": "TRK-88011", "final_sale": false},
+    {"id": "ORD-20426", "customer_id": "C-1004", "placed": "2026-09-26", "status": "cancelled", "total": 42.00, "items": ["Gloves"], "tracking_id": null, "final_sale": false},
+    {"id": "ORD-20433", "customer_id": "C-1005", "placed": "2026-09-29", "status": "processing", "total": 99.00, "items": ["Sleeping bag liner"], "tracking_id": null, "final_sale": false}
+  ],
+  "shipments": [
+    {"tracking_id": "TRK-88001", "carrier": "Parcelway", "status": "delivered", "last_event": "2026-09-06", "location": "Denver, CO"},
+    {"tracking_id": "TRK-88017", "carrier": "Parcelway", "status": "in_transit", "last_event": "2026-09-30", "location": "Omaha, NE", "eta": "2026-10-03"},
+    {"tracking_id": "TRK-87988", "carrier": "Parcelway", "status": "delivered", "last_event": "2026-07-19", "location": "Denver, CO"},
+    {"tracking_id": "TRK-88022", "carrier": "EuroPost", "status": "delivered", "last_event": "2026-09-23", "location": "Leipzig, DE"},
+    {"tracking_id": "TRK-87995", "carrier": "Parcelway", "status": "delivered", "last_event": "2026-08-14", "location": "Austin, TX"},
+    {"tracking_id": "TRK-88019", "carrier": "Parcelway", "status": "exception", "last_event": "2026-09-29", "location": "Memphis, TN", "note": "Address could not be verified; held at depot"},
+    {"tracking_id": "TRK-88011", "carrier": "EuroPost", "status": "delivered", "last_event": "2026-09-16", "location": "Porto, PT"}
+  ],
+  "refund_policies": [
+    {"region": "US", "window_days": 30, "condition": "Unused items in original packaging", "final_sale_refundable": false, "refund_method": "Original payment method within 5-7 business days"},
+    {"region": "EU", "window_days": 30, "condition": "Any item; 14-day statutory withdrawal right applies regardless of condition", "final_sale_refundable": false, "refund_method": "Original payment method within 14 days"}
+  ],
+  "kb_articles": [
+    {"id": "KB-01", "title": "How to start a return", "body": "Start a return from Orders > Return item. A prepaid label is emailed within one hour. Returns are free for Plus members; standard members pay a 6 dollar label fee."},
+    {"id": "KB-02", "title": "Changing a shipping address", "body": "Addresses can be changed only while an order is processing. Once an order ships, contact the carrier with the tracking number."},
+    {"id": "KB-03", "title": "Plus membership", "body": "Plus membership costs 49 dollars per year and includes free returns and free standard shipping on all orders."},
+    {"id": "KB-04", "title": "Shipping times", "body": "Standard shipping takes 3-6 business days in the US and 4-8 business days in the EU. Orders placed before noon ship the same day."},
+    {"id": "KB-05", "title": "Damaged items", "body": "If an item arrives damaged, reply with a photo within 7 days of delivery and we will send a replacement at no cost."},
+    {"id": "KB-06", "title": "Cancelling an order", "body": "Orders can be cancelled while processing. Cancelled orders are refunded automatically within 3 business days."},
+    {"id": "KB-07", "title": "Gift cards", "body": "Gift cards never expire and cannot be redeemed for cash. Lost gift cards can be replaced with proof of purchase."},
+    {"id": "KB-08", "title": "Price adjustments", "body": "If an item's price drops within 14 days of purchase, Plus members can request the difference as store credit."}
+  ]
+}
