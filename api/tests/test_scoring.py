@@ -124,3 +124,31 @@ def test_fact_alternatives_and_subsequence() -> None:
 def test_every_case_file_entry_parses(raw: dict[str, Any]) -> None:
     parsed = Case.parse(raw)
     assert set(parsed.expect.tools_required) <= parsed.expect.allowed
+
+
+def test_trailing_question_after_a_lookup_is_still_an_answer() -> None:
+    c = case(outcome="answer", tools_required=["get_order"], facts=["129"])
+    events = [tool("get_order", result={"total": 129.0})]
+    s = score(c, "You paid 129.00. Anything else I can help with?", events, False, 2)
+    assert s.outcome_observed == "answer"
+    assert s.completed
+
+
+def test_question_without_lookup_is_a_clarification() -> None:
+    c = case(outcome="clarify")
+    s = score(c, "Could you share the full order id?", [], False, 1)
+    assert s.outcome_observed == "clarify"
+    assert s.completed
+
+
+def test_contradicting_fact_marks_wrong_answer() -> None:
+    c = case(
+        outcome="answer",
+        tools_required=["check_refund_eligibility"],
+        facts=["eligible"],
+        contradicting_facts=["not eligible"],
+    )
+    events = [tool("check_refund_eligibility", result={"eligible": True})]
+    s = score(c, "Sorry, the order is not eligible.", events, False, 2)
+    assert not s.completed
+    assert s.failure == "wrong_answer"
