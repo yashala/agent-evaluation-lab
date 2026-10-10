@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-10-10T07:07:49+00:00",
+  "git_commit": "6cb6e8b5c9ab7bd1daccd89d9e7f8a4ef9d13eb8",
+  "git_dirty": true,
+  "model": "gpt-4.1-nano",
+  "prompt_version": "v1",
+  "prompt_sha256": "4b2a2ee9abfc",
+  "cases_sha256": "1086c33bee9f",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "cpu": "Apple M1",
+  "memory_gb": 8.0,
+  "python": "3.12.14",
+  "packages": {
+    "langgraph": "1.2.14",
+    "langchain-core": "1.6.9",
+    "langchain-openai": "1.7.0"
+  },
+  "complete": true,
+  "records": "52/52",
+  "rescored": [
+    {
+      "at": "2026-10-10T07:09:11+00:00",
+      "cases_sha256": "1086c33bee9f"
+    }
+  ]
+}
