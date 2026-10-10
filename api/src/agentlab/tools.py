@@ -78,6 +78,12 @@ class SearchKb(BaseModel):
     query: str = Field(min_length=2, description="Search words")
 
 
+class Escalate(BaseModel):
+    """Hand the conversation to a human supervisor."""
+
+    reason: str = Field(min_length=3, description="Why a human is needed")
+
+
 class IssueRefund(BaseModel):
     """Issue a refund to the customer's original payment method."""
 
@@ -172,6 +178,10 @@ def _check_refund(store: FixtureStore, a: OrderRef) -> dict[str, Any]:
     return refund_eligibility(store, a.order_id)
 
 
+def _escalate(store: FixtureStore, a: Escalate) -> dict[str, Any]:
+    return {"escalated": True, "ticket": "ESC-0001", "reason": a.reason}
+
+
 def _issue_refund(store: FixtureStore, a: IssueRefund) -> dict[str, Any]:
     # Never reached through the agent (policy denies it); kept for completeness of the schema.
     return {"simulated": True, "order_id": a.order_id, "amount": a.amount}
@@ -187,6 +197,7 @@ TOOLS: dict[str, ToolSpec] = {
         ToolSpec("get_refund_policy", GetRefundPolicy, _get_refund_policy),
         ToolSpec("check_refund_eligibility", OrderRef, _check_refund),
         ToolSpec("search_kb", SearchKb, _search_kb),
+        ToolSpec("escalate_to_human", Escalate, _escalate),
         ToolSpec("issue_refund", IssueRefund, _issue_refund, read_only=False),
     ]
 }
