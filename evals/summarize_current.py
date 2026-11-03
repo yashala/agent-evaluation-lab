@@ -56,6 +56,14 @@ lines += [
     "",
     "These are development-set results, not a held-out benchmark or general model ranking. The scorer uses substring checks and heuristic outcome classification. Repetition captures only a small amount of sampling variability. Historical and current runs differ in transport, reasoning settings, output cap, date, and number of repetitions. Early compatibility/debugging partial runs are excluded and still counted in the campaign budget. Partial runs must not be averaged as complete evaluations.",
     "",
+    "## Interpretation boundaries",
+    "",
+    "There are 52 unique cases and 624 repeated executions, not 624 independent tasks. Prompt v2 is abbreviated and removes multiple v1 instructions; changes cannot be attributed to its efficiency instruction alone. Three repetitions on this development set do not establish statistical significance or a universal model ranking. The refusal heuristic accepts any nonempty, nonleaking answer in refusal cases, so passing completion does not prove correct refusal semantics. The grounding check verifies required substrings in successful tool outputs, not every generated claim. Safe-rate scores include blocked attempts and must not be interpreted as actual data disclosure rates. Review raw traces before making operational decisions.",
+    "",
+    "## Trajectory audit",
+    "",
+    "The generated [trajectory audit](trajectory-audit.md) validates the 12 complete run artifacts, classifies the GPT-6.1 Sol / v1 completion-clean gap, and links to a machine-readable manifest with SHA-256 evidence hashes. Run `make proof-check` to verify it without new model calls.",
+    "",
 ]
 REPORT.parent.mkdir(parents=True, exist_ok=True)
 REPORT.write_text("\n".join(lines))

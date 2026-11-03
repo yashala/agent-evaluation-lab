@@ -1,27 +1,27 @@
-My agent scored 92.3% on task completion. A second metric made it look much worse.
+92.3% task completion looked reassuring. The tool traces told a more complicated story.
 
-Then I looked at what that metric was actually counting.
+I evaluated a customer-support agent on 52 synthetic cases, with three runs per configuration.
 
-I ran GPT-6.1 Sol on 52 synthetic customer-support cases, three times with the same prompt:
-• 144 of 156 executions passed the completion checks.
-• 110 passed every check in the evaluation harness.
-• All 34 of the additional failures were labeled “wrong tool.”
+Using the same v1 prompt:
+• GPT-6.1 Sol: 144/156 executions passed the completion checks; 110/156 were clean.
+• GPT-6 Luna: 129/156 passed completion; 114/156 were clean.
 
-One example: the agent looked up an order before checking refund eligibility. The case expected only the eligibility tool, so the extra lookup reduced its tool-use score.
+That is 92.3% completion versus 70.5% clean execution for Sol, and 82.7% versus 73.1% for Luna.
 
-That might be an unnecessary API call. It is not, by itself, evidence of an incorrect answer or a security failure.
+Those 156 executions per configuration repeat the same 52 cases. They are not 156 independent tasks.
 
-This is the part of agent evaluation I find interesting: a score can measure your preferred workflow as well as the agent’s actual behavior.
+The distinction comes from what the harness checks. Completion looks for an acceptable outcome and expected facts. A clean trace also requires acceptable tool selection, arguments, ordering, and no recorded policy or grounding failure. Blocked attempts still count.
 
-My lab records task completion, tool selection, arguments, ordering and policy violations separately. The full comparison covers two models, two prompts and three repetitions—624 executions of the same 52 cases, not 624 independent tasks.
+I’m interested in that gap because an acceptable final response can conceal a problematic execution path.
 
-The lesson I’m taking forward: inspect the failure categories before calling one agent “more reliable.” Extra calls, missing evidence and forbidden actions need different interpretations.
+But the evaluator deserves scrutiny too. This scorer uses substring fact checks and heuristic outcome detection. “Clean” means it passed those checks; it does not establish production safety. A few percentage points on this small development set are not evidence of a universal model ranking.
 
-These are small development-set experiments with heuristic scoring, not a model leaderboard. My next step is to review acceptable alternative tool paths without silently rewriting the original results.
+The full experiment covers two models, two prompts and three repetitions: 624 executions. Both models used low reasoning effort and the same output cap. The abbreviated v2 prompt also removes instructions, so it is not an isolated efficiency experiment.
 
-Built with Python, LangGraph and LangChain. The report and raw traces are here:
+Built with Python, LangGraph and LangChain, with saved traces and a comparison dashboard. The next useful step is held-out cases and manual review of scorer disagreements.
+
+Would your agent still pass if you graded its tool trace separately from its final answer?
+
 https://github.com/yashala/agent-evaluation-lab/blob/eval/newer-model-comparison/docs/results/current-model-comparison.md
-
-When you evaluate an agent, how do you distinguish a valid alternative workflow from a genuine tool-use error?
 
 #AIEngineering #AgentEvaluation #LangGraph

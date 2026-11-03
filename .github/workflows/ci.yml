@@ -31,7 +31,9 @@ jobs:
       - run: uv sync --project api --frozen
       - run: uv run --project api ruff check api evals
       - run: uv run --project api ruff format --check api evals
-      - run: uv run --project api mypy --config-file api/pyproject.toml api/src api/tests evals/run.py evals/gate.py evals/report.py evals/rescore.py evals/langsmith_experiment.py
+      - run: uv run --project api mypy --config-file api/pyproject.toml api/src api/tests evals/run.py evals/gate.py evals/report.py evals/rescore.py evals/langsmith_experiment.py evals/audit_current.py
+      - name: Verify committed comparison evidence
+        run: uv run --project api python evals/audit_current.py --check
       - run: uv run pytest
         working-directory: api
         env:

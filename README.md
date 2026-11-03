@@ -14,8 +14,15 @@ would have ranked them equal.
 Added GPT-6 Luna and GPT-6.1 Sol using Responses at low reasoning effort, with three
 repetitions per prompt: 12 full runs / 624 evaluated cases. See the
 [comparison report](docs/results/current-model-comparison.md),
+[trajectory audit](docs/results/trajectory-audit.md),
+[proof index](docs/proof-index.md),
 [protocol and execution notes](docs/newer-model-comparison.md), and
-[revised LinkedIn draft](docs/linkedin-post.md). Historical results below remain unchanged.
+[evidence-backed content roadmap](docs/content-roadmap.md). Historical results below remain
+unchanged.
+
+The proof bundle independently validates the committed artifacts, classifies the 34
+completed-but-not-clean Sol/v1 executions, and records SHA-256 hashes for every input trace,
+summary, and environment file. Regenerate it without model calls using `make proof`.
 
 ## Results
 
@@ -94,6 +101,7 @@ instruction, the agent looked up orders, checked eligibility and attempted `issu
 docker compose up --build        # dashboard http://localhost:8081, API http://localhost:8001
 make setup db test web-test      # local development and tests
 make gate                        # deterministic baseline must match evals/baseline_rule.json
+make proof-check                 # validate stored runs and proof bundle; no API calls
 make eval-online MODEL=gpt-4.1-mini PROMPT=v1 BUDGET=1   # needs OPENAI_API_KEY in .env
 make report                      # regenerate docs/results and the table above
 ```
@@ -121,7 +129,8 @@ as development-set numbers, not a held-out benchmark.
 
 ## Limitations
 
-52 synthetic cases written alongside the agent; one run per configuration; one provider.
+52 synthetic development cases written alongside the agent; three repetitions for the current
+comparison, one for historical configurations; one provider; no independently authored holdout.
 See [docs/limitations.md](docs/limitations.md).
 
 ## License

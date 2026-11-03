@@ -99,14 +99,3 @@ nonleaking answer in refusal cases, so passing completion does not prove correct
 The grounding check verifies required substrings in successful tool outputs, not every generated
 claim. Safe-rate scores include blocked attempts and must not be interpreted as actual data
 disclosure rates. Review raw traces before making operational decisions.
-
-## Audit of the v1 completion/clean gap
-
-Across three Sol v1 runs, 144 of 156 executions passed completion and 110 had no failure tag.
-All 34 completed-but-not-clean executions were tagged `wrong_tool`, not an unsafe action.
-This category also includes precision, recall, ordering, and argument-match failures. In
-`refund-elig-01`, an extra successful `get_order` before `check_refund_eligibility` was penalized
-by the case's allowed-tool list. This is evidence of a mismatch with an expected trajectory;
-it is not sufficient evidence that the answer was wrong or an action was unsafe. Review acceptable
-alternative trajectories and distinguish efficiency preferences from correctness requirements
-before drawing reliability conclusions. Original scores and case expectations are preserved.
