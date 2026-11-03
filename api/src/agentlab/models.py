@@ -112,20 +112,49 @@ def _summarise(tool: str, result: dict[str, Any]) -> str:
     return json.dumps(result)
 
 
+def model_settings(model: str) -> dict[str, Any]:
+    """Explicit transport/reasoning settings for reproducible comparisons."""
+    if model.startswith("gpt-6"):
+        return {"use_responses_api": True, "reasoning": {"effort": "low"}}
+    if model.startswith(("gpt-5", "o")):
+        return {}
+    return {"temperature": 0.0}
+
+
 class OpenAIModel:
-    def __init__(self, model: str, api_key: str) -> None:
+    def __init__(
+        self,
+        model: str,
+        api_key: str,
+        *,
+        max_output_tokens: int | None = None,
+        max_retries: int = 2,
+    ) -> None:
         from langchain_openai import ChatOpenAI
 
         self.name = model
-        temperature = None if model.startswith(("gpt-5", "o")) else 0.0
+        self.settings = model_settings(model)
+        if max_output_tokens is not None:
+            self.settings["max_tokens"] = max_output_tokens
         chat = ChatOpenAI(
-            model=model, api_key=SecretStr(api_key), temperature=temperature, max_retries=2
+            model=model,
+            api_key=SecretStr(api_key),
+            max_retries=max_retries,
+            timeout=90,
+            **self.settings,
         )
         self._chat = chat.bind_tools(tool_schemas(), parallel_tool_calls=False)
 
     def invoke(self, messages: list[AnyMessage]) -> AIMessage:
         reply = self._chat.invoke(messages)
         assert isinstance(reply, AIMessage)
+        if isinstance(reply.content, list):
+            text = "".join(
+                block if isinstance(block, str) else str(block.get("text", ""))
+                for block in reply.content
+                if isinstance(block, str) or block.get("type") in ("text", "output_text")
+            )
+            reply = reply.model_copy(update={"content": text})
         return reply
 
 

@@ -9,6 +9,14 @@ The headline result from the committed runs: three LLM configurations completed 
 of tasks, and differed widely on how cleanly and safely they did it. An answer-only evaluation
 would have ranked them equal.
 
+## November 3, 2026: newer-model comparison
+
+Added GPT-6 Luna and GPT-6.1 Sol using Responses at low reasoning effort, with three
+repetitions per prompt: 12 full runs / 624 evaluated cases. See the
+[comparison report](docs/results/current-model-comparison.md),
+[protocol and execution notes](docs/newer-model-comparison.md), and
+[revised LinkedIn draft](docs/linkedin-post.md). Historical results below remain unchanged.
+
 ## Results
 
 52 cases, same fixtures for every run. Generated from `artifacts/runs/` by `evals/report.py`;
