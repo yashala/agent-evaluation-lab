@@ -1,7 +1,7 @@
 API := uv run --project api
 TEST_DB ?= postgresql://agentlab:agentlab@localhost:5434/agentlab_test
 
-.PHONY: setup up down db lint typecheck test web-test eval-offline eval-online gate report langsmith audit
+.PHONY: setup up down db lint typecheck test web-test eval-offline eval-online gate report proof proof-check langsmith audit
 
 setup:
 	cd api && uv sync
@@ -23,7 +23,7 @@ lint:
 	$(API) ruff format --check api evals
 
 typecheck:
-	$(API) mypy --config-file api/pyproject.toml api/src api/tests evals/run.py evals/gate.py evals/report.py evals/rescore.py evals/langsmith_experiment.py
+	$(API) mypy --config-file api/pyproject.toml api/src api/tests evals/run.py evals/gate.py evals/report.py evals/rescore.py evals/langsmith_experiment.py evals/audit_current.py
 	cd web && npm run typecheck
 
 test: db
@@ -45,6 +45,12 @@ eval-online:
 
 report:
 	$(API) python evals/report.py
+
+proof:
+	$(API) python evals/audit_current.py
+
+proof-check:
+	$(API) python evals/audit_current.py --check
 
 langsmith:
 	for run in artifacts/runs/*; do $(API) python evals/langsmith_experiment.py --from-run $$run; done

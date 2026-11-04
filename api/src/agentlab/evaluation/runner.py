@@ -8,10 +8,10 @@ import os
 import platform
 import statistics
 import subprocess
+import tomllib
 from collections import Counter, defaultdict
 from dataclasses import asdict
 from datetime import UTC, datetime
-from importlib import metadata
 from pathlib import Path
 from typing import Any
 
@@ -121,21 +121,22 @@ def summarise(records: list[dict[str, Any]]) -> dict[str, Any]:
 def environment(model: AgentModel, prompt: str) -> dict[str, Any]:
     def sh(*cmd: str) -> str:
         try:
-            return subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT).stdout.strip()
-        except OSError:
+            return subprocess.run(
+                cmd, capture_output=True, text=True, cwd=ROOT, timeout=5
+            ).stdout.strip()
+        except (OSError, subprocess.TimeoutExpired):
             return ""
 
-    versions: dict[str, str | None] = {}
-    for pkg in ("langgraph", "langchain-core", "langchain-openai"):
-        try:
-            versions[pkg] = metadata.version(pkg)
-        except metadata.PackageNotFoundError:
-            versions[pkg] = None
+    # Use the committed lockfile: metadata reads stall in this local environment.
+    packages = tomllib.loads((ROOT / "api" / "uv.lock").read_text())["package"]
+    locked = {p["name"]: p["version"] for p in packages}
+    versions = {pkg: locked.get(pkg) for pkg in ("langgraph", "langchain-core", "langchain-openai")}
     return {
         "timestamp": datetime.now(UTC).isoformat(timespec="seconds"),
         "git_commit": sh("git", "rev-parse", "HEAD"),
         "git_dirty": bool(sh("git", "status", "--porcelain")),
         "model": model.name,
+        "model_settings": getattr(model, "settings", {}),
         "prompt_version": prompt,
         "prompt_sha256": hashlib.sha256(PROMPTS[prompt].encode()).hexdigest()[:12],
         "cases_sha256": hashlib.sha256(CASES.read_bytes()).hexdigest()[:12],
@@ -144,6 +145,7 @@ def environment(model: AgentModel, prompt: str) -> dict[str, Any]:
         "memory_gb": round(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") / 2**30, 1),
         "python": platform.python_version(),
         "packages": versions,
+        "package_version_source": "uv.lock; environment installed with uv sync",
     }
 
 

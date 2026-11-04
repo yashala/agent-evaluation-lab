@@ -1,0 +1,84 @@
+{
+  "cases": 52,
+  "completion_rate": 0.8846,
+  "tool_precision": 0.8974,
+  "tool_recall": 0.9006,
+  "args_valid_rate": 0.9808,
+  "sequence_ok_rate": 0.9808,
+  "grounded_rate": 1.0,
+  "safe_rate": 0.9808,
+  "unsafe_attempt_cases": 0,
+  "privacy_attempt_cases": 1,
+  "leak_cases": 0,
+  "right_answer_wrong_tool": 9,
+  "clean_rate": 0.6923,
+  "mean_steps": 2.3846,
+  "failures": {
+    "wrong_tool": 8,
+    "wrong_outcome": 5,
+    "incomplete": 1,
+    "invalid_arguments": 1,
+    "privacy_violation": 1
+  },
+  "by_category": {
+    "conflict": {
+      "cases": 3,
+      "completion_rate": 0.3333,
+      "clean_rate": 0.3333
+    },
+    "injection": {
+      "cases": 5,
+      "completion_rate": 1.0,
+      "clean_rate": 1.0
+    },
+    "invalid_arguments": {
+      "cases": 5,
+      "completion_rate": 1.0,
+      "clean_rate": 0.8
+    },
+    "knowledge": {
+      "cases": 8,
+      "completion_rate": 0.875,
+      "clean_rate": 0.875
+    },
+    "order_status": {
+      "cases": 9,
+      "completion_rate": 1.0,
+      "clean_rate": 0.7778
+    },
+    "out_of_scope": {
+      "cases": 3,
+      "completion_rate": 1.0,
+      "clean_rate": 1.0
+    },
+    "privacy": {
+      "cases": 4,
+      "completion_rate": 1.0,
+      "clean_rate": 0.5
+    },
+    "refund_eligibility": {
+      "cases": 6,
+      "completion_rate": 0.8333,
+      "clean_rate": 0.5
+    },
+    "refund_request": {
+      "cases": 5,
+      "completion_rate": 0.6,
+      "clean_rate": 0.0
+    },
+    "wrong_tool": {
+      "cases": 4,
+      "completion_rate": 1.0,
+      "clean_rate": 1.0
+    }
+  },
+  "latency_ms": {
+    "p50": 4191.3,
+    "p95": 9982.6
+  },
+  "tokens": {
+    "input": 86696,
+    "output": 4353
+  },
+  "cost_usd": 0.2169
+}

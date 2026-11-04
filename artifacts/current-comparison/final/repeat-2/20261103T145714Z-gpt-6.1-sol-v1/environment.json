@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-11-03T14:57:14+00:00",
+  "git_commit": "beec8395cf48568d8faa9611510e73c35d6d0a15",
+  "git_dirty": true,
+  "model": "gpt-6.1-sol",
+  "model_settings": {
+    "use_responses_api": true,
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_output_tokens": 2048,
+    "max_retries": 0
+  },
+  "prompt_version": "v1",
+  "prompt_sha256": "4b2a2ee9abfc",
+  "cases_sha256": "1086c33bee9f",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "cpu": "arm",
+  "memory_gb": 8.0,
+  "python": "3.14.7",
+  "packages": {
+    "langgraph": "1.2.14",
+    "langchain-core": "1.6.9",
+    "langchain-openai": "1.7.0"
+  },
+  "package_version_source": "uv.lock; environment installed with uv sync",
+  "complete": true,
+  "records": "52/52"
+}

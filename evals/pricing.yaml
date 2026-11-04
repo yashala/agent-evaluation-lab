@@ -5,3 +5,9 @@ gpt-4.1-nano: {input: 0.10, output: 0.40}
 gpt-5-mini: {input: 0.25, output: 2.00}
 gpt-5-nano: {input: 0.05, output: 0.40}
 rule-baseline: {input: 0.0, output: 0.0}
+
+# Standard rates verified 2026-11-03:
+# https://developers.openai.com/api/docs/pricing
+# Conservative estimates: all input tokens charged at uncached rates.
+gpt-6-luna: {input: 0.10, output: 0.50}
+gpt-6.1-sol: {input: 2.00, output: 10.00}
